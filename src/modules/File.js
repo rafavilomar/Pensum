@@ -10,7 +10,7 @@ const PATH = `${__dirname}/../file.json`
 
 // ----------
 
-export const read = () => {
+export const readFile = () => {
   console.log(PATH);
   return new Promise((resolve, reject) => {
     fs.readFile(PATH, (err, data) => {
@@ -28,7 +28,7 @@ export const read = () => {
   })
 }
 
-export const write = (data) => {
+export const writeFile = (data) => {
   return new Promise((resolve, reject) => {
     fs.writeFile(PATH, JSON.stringify(data), (err) => {
       if (err) {
