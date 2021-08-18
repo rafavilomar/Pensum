@@ -24,13 +24,7 @@ export const write = (data) => {
       if (err) {
         reject(err)
       }
-      //resolve(JSON.parse(data))
+      resolve(data)
     })
-    //  err ? reject(err) : resolve(JSON.parse(data))})
   })
 }
-
-//module.exports = {
-//  read,
-//  write
-//};
