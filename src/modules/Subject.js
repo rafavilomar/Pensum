@@ -41,8 +41,20 @@ class Subject {
   getStatus(){
     return this.status
   }
-  setStatus(value){
-    this.status = value;
+  setPending(){
+    this.status = "PENDING";
+  }
+  setValidated(){
+    this.status = "VALIDATED";
+  }
+  setApproved(){
+    this.status = "APPROVED";
+  }
+  setFailed(){
+    this.status = "FAILED";
+  }
+  setInProgress(){
+    this.status = "IN PROGRESS";
   }
 }
 export default Subject;
