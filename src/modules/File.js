@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { errorConsole, infoConsole, separatorConsole } from '../utils/console.js';
 
 // ----------
 
@@ -11,17 +12,22 @@ const PATH = `${__dirname}/../file.json`
 // ----------
 
 export const readFile = () => {
-  console.log(PATH);
   return new Promise((resolve, reject) => {
     fs.readFile(PATH, (err, data) => {
       if (err) {
-        write([])
+        writeFile([])
       }else{
         try {
           resolve(JSON.parse(data))
         } catch (error) {
-          console.error('Something was wrong with FILE.JSON. We are working on it...');
-          write([])
+          separatorConsole()
+          errorConsole('Something was wrong with FILE.JSON.');
+          infoConsole('Working on it... ')
+          writeFile([])
+
+          setTimeout(async () => {
+            console.table(await readFile());
+          }, 1500);
         }
       }
     })

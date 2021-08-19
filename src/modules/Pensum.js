@@ -1,4 +1,5 @@
-import { readFile } from "./File.js";
+import { readFile, writeFile } from "./File.js";
+import Subject from "./Subject.js";
 
 class Pensum {
   
@@ -12,8 +13,20 @@ class Pensum {
       }
     })
   }
+
+  newSubject(subject){
+    return new Promise((resolve, reject) => {
+      let list = this.subjectList
+      list.push(subject)
+      this.subjectList = list
+
+      resolve(this.subjectList);
+    })
+  }
   
-  
+  savePensum(){
+    return writeFile(this.subjectList)
+  }
 
   //======================
 

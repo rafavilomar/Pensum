@@ -1,3 +1,5 @@
+import { APPROVED, FAILED, IN_PROGRESS, PENDING, VALIDATED } from "../utils/subject.js";
+
 class Subject {
 
   constructor(code, name, credit, prerequisite, status){
@@ -42,19 +44,19 @@ class Subject {
     return this.status
   }
   setPending(){
-    this.status = "PENDING";
+    this.status = PENDING;
   }
   setValidated(){
-    this.status = "VALIDATED";
+    this.status = VALIDATED;
   }
   setApproved(){
-    this.status = "APPROVED";
+    this.status = APPROVED;
   }
   setFailed(){
-    this.status = "FAILED";
+    this.status = FAILED;
   }
   setInProgress(){
-    this.status = "IN PROGRESS";
+    this.status = IN_PROGRESS;
   }
 }
 export default Subject;
