@@ -5,8 +5,8 @@ import Pensum from './Pensum.js';
 import Subject from './Subject.js';
 
 // Utils
-import Menu, { ADD, LIST } from '../utils/menu.js';
-import {loadingConsole, successConsole, titleConsole} from '../utils/console.js'
+import {Menu, SearchSubmenu, ADD, LIST, SEARCH, SEARCH_ANOTHER, BACK_TO_MENU } from '../utils/menu.js';
+import {errorConsole, infoConsole, loadingConsole, successConsole, titleConsole} from '../utils/console.js'
 import { PENDING } from '../utils/subject.js';
 
 //=============================================================================================
@@ -39,6 +39,10 @@ export const menu = async () => {
     
     case ADD:
       addSubject();
+      break;
+
+    case SEARCH:
+      searchSubject();
       break;
   
     default:
@@ -94,6 +98,45 @@ export const addSubject = async () => {
     }
   })
   
+}
+
+export const searchSubject = async () => {
+  console.clear()
+  titleConsole(SEARCH)
+  const answer = await questionConsole([{message: "Search by name:"}])
+  const subject = await pensum.getSubjectByName(answer['Search by name:'])
+
+  if (subject) {
+    console.table(subject) 
+  } else {
+    infoConsole(`Can't find a subject for: ${answer['Search by name:']}`)
+  }
+  
+  await searchSubmenu()
+}
+
+const searchSubmenu = async () => {
+  const action = await inquirer.prompt([{
+    type: 'list',
+    message: "What do you want to do:", 
+    name: 'menu', 
+    choices: [...SearchSubmenu],
+  }])
+
+  switch (action.menu) {
+
+    case SEARCH_ANOTHER:
+      searchSubject();
+      break;
+    
+    case BACK_TO_MENU:
+      welcome();
+      break
+  
+    default:
+      console.log('nothing');
+      break;
+  }
 }
 
 export const questionConsole = async (questions = [{message, def, type, choices}]) => {
