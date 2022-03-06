@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import readline from 'readline';
+import inquirer from "inquirer";
 
 const rl = readline.createInterface({
   input: process.stdin,

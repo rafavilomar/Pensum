@@ -5,8 +5,8 @@ import Pensum from './Pensum.js';
 import Subject from './Subject.js';
 
 // Utils
-import {Menu, SearchSubmenu, ADD, LIST, SEARCH, SEARCH_ANOTHER, BACK_TO_MENU } from '../utils/menu.js';
-import {errorConsole, infoConsole, loadingConsole, successConsole, titleConsole} from '../utils/console.js'
+import {Menu, SearchSubmenu, ADD, LIST, SEARCH, SEARCH_ANOTHER, BACK_TO_MENU, REMOVE } from '../utils/menu.js';
+import {errorConsole, infoConsole, loadingConsole, separatorConsole, successConsole, titleConsole} from '../utils/console.js'
 import { PENDING } from '../utils/subject.js';
 
 //=============================================================================================
@@ -43,6 +43,10 @@ export const menu = async () => {
 
     case SEARCH:
       searchSubject();
+      break;
+    
+    case REMOVE:
+      removeSubject();
       break;
   
     default:
@@ -137,6 +141,26 @@ const searchSubmenu = async () => {
       console.log('nothing');
       break;
   }
+}
+
+const removeSubject = async () => {
+  console.clear()
+  titleConsole(REMOVE)
+  const answer = await questionConsole([{message: "Search by name:"}])
+  const subject = pensum.getSubjectByName(answer['Search by name:'])
+
+  // CONFIRMATION
+  console.table(subject)
+  separatorConsole()
+  let confirmation = await yesOrNot("Are you sure you want to remove this subject?");
+  if (confirmation) {
+    pensum.removeSubject(subject)
+    successConsole("Subject removed successfully!")
+  } else {
+    infoConsole("Subject not removed")
+  }
+
+  backToMenu()
 }
 
 export const questionConsole = async (questions = [{message, def, type, choices}]) => {
