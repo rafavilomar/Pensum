@@ -1,5 +1,4 @@
 import { readFile, writeFile } from "./File.js";
-import Subject from "./Subject.js";
 
 class Pensum {
   

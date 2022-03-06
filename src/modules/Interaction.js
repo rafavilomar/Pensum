@@ -5,7 +5,7 @@ import Pensum from './Pensum.js';
 import Subject from './Subject.js';
 
 // Utils
-import {Menu, SearchSubmenu, ADD, LIST, SEARCH, SEARCH_ANOTHER, BACK_TO_MENU, REMOVE } from '../utils/menu.js';
+import {Menu, SearchSubmenu, ADD, LIST, SEARCH, SEARCH_ANOTHER, BACK_TO_MENU, REMOVE, RemoveSubmenu, REMOVE_ANOTHER } from '../utils/menu.js';
 import {errorConsole, infoConsole, loadingConsole, separatorConsole, successConsole, titleConsole} from '../utils/console.js'
 import { PENDING } from '../utils/subject.js';
 
@@ -149,18 +149,43 @@ const removeSubject = async () => {
   const answer = await questionConsole([{message: "Search by name:"}])
   const subject = pensum.getSubjectByName(answer['Search by name:'])
 
-  // CONFIRMATION
-  console.table(subject)
-  separatorConsole()
-  let confirmation = await yesOrNot("Are you sure you want to remove this subject?");
-  if (confirmation) {
-    pensum.removeSubject(subject)
-    successConsole("Subject removed successfully!")
+
+  if (subject) {
+    // CONFIRMATION
+    console.table(subject)
+    separatorConsole()
+    let confirmation = await yesOrNot("Are you sure you want to remove this subject?");
+    if (confirmation) {
+      pensum.removeSubject(subject)
+      successConsole("Subject removed successfully!")
+    } else {
+      infoConsole("Subject not removed")
+    }
   } else {
-    infoConsole("Subject not removed")
+    infoConsole(`Can't find a subject for: ${answer['Search by name:']}`)
   }
 
-  backToMenu()
+  await removeSubmenu()
+}
+
+const removeSubmenu = async () => {
+  const action = await inquirer.prompt([{
+    type: 'list',
+    message: "What do you want to do:", 
+    name: 'menu', 
+    choices: [...RemoveSubmenu],
+  }])
+
+  switch (action.menu) {
+
+    case REMOVE_ANOTHER:
+      removeSubject();
+      break;
+    
+    case BACK_TO_MENU:
+      welcome();
+      break;
+  }
 }
 
 export const questionConsole = async (questions = [{message, def, type, choices}]) => {
