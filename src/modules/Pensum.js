@@ -23,6 +23,11 @@ class Pensum {
       resolve(this.subjectList);
     })
   }
+
+  async getSubjectByName(subjectName) {
+    const subject = this.subjectList.find(e => e.name.toLowerCase() === subjectName)
+    return subject
+  }
   
   savePensum(){
     return writeFile(this.subjectList)
