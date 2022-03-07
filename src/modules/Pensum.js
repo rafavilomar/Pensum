@@ -1,5 +1,4 @@
 import { readFile, writeFile } from "./File.js";
-import Subject from "./Subject.js";
 
 class Pensum {
   
@@ -24,9 +23,19 @@ class Pensum {
     })
   }
 
-  async getSubjectByName(subjectName) {
+  getSubjectByName(subjectName) {
     const subject = this.subjectList.find(e => e.name.toLowerCase() === subjectName)
     return subject
+  }
+
+  getSubjectIndex(subject) {
+    return this.subjectList.indexOf(subject)
+  }
+
+  removeSubject(subject) {
+    const index = this.getSubjectIndex(subject)
+    this.subjectList.splice(index, 1);
+    this.savePensum()
   }
   
   savePensum(){
