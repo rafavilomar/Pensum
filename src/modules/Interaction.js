@@ -5,7 +5,7 @@ import Pensum from './Pensum.js';
 import Subject from './Subject.js';
 
 // Utils
-import {Menu, SearchSubmenu, ADD, EDIT, LIST, SEARCH, SEARCH_ANOTHER, BACK_TO_MENU, REMOVE, RemoveSubmenu, REMOVE_ANOTHER, REMOVE_THIS } from '../utils/menu.js';
+import {Menu, SearchSubmenu, ADD, EDIT, LIST, SEARCH, SEARCH_ANOTHER, BACK_TO_MENU, REMOVE, RemoveSubmenu, REMOVE_ANOTHER, REMOVE_THIS, UpdateSubmenu, EDIT_ANOTHER } from '../utils/menu.js';
 import {errorConsole, infoConsole, loadingConsole, separatorConsole, successConsole, titleConsole} from '../utils/console.js'
 import Status, { PENDING } from '../utils/subject.js';
 
@@ -235,7 +235,29 @@ const updateSubject = async () => {
   } else {
     infoConsole(`Can't find a subject for: ${answer['Search by name:']}`)
   }
+
+  await editSubmenu()
   
+}
+
+const editSubmenu = async () => {
+  const action = await inquirer.prompt([{
+    type: 'list',
+    message: "What do you want to do:", 
+    name: 'menu', 
+    choices: [...UpdateSubmenu],
+  }])
+
+  switch (action.menu) {
+
+    case EDIT_ANOTHER:
+      updateSubject();
+      break;
+    
+    case BACK_TO_MENU:
+      welcome();
+      break;
+  }
 }
 
 export const questionConsole = async (questions = [{message, def, type, choices}]) => {
