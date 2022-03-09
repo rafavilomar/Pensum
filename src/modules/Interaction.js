@@ -5,9 +5,9 @@ import Pensum from './Pensum.js';
 import Subject from './Subject.js';
 
 // Utils
-import {Menu, SearchSubmenu, ADD, LIST, SEARCH, SEARCH_ANOTHER, BACK_TO_MENU, REMOVE, RemoveSubmenu, REMOVE_ANOTHER, REMOVE_THIS } from '../utils/menu.js';
+import {Menu, SearchSubmenu, ADD, EDIT, LIST, SEARCH, SEARCH_ANOTHER, BACK_TO_MENU, REMOVE, RemoveSubmenu, REMOVE_ANOTHER, REMOVE_THIS } from '../utils/menu.js';
 import {errorConsole, infoConsole, loadingConsole, separatorConsole, successConsole, titleConsole} from '../utils/console.js'
-import { PENDING } from '../utils/subject.js';
+import Status, { PENDING } from '../utils/subject.js';
 
 //=============================================================================================
 
@@ -48,6 +48,11 @@ export const menu = async () => {
     case REMOVE:
       removeSubject();
       break;
+
+    case EDIT:
+      updateSubject();
+      break;
+
   
     default:
       console.log('nothing');
@@ -71,7 +76,7 @@ export const addSubject = async () => {
     {message: 'Name:'},
     {message: 'Credit:'},
     {message: 'Prerequisite:'},
-    {message: 'Status:', def: PENDING}
+    {message: 'Status:', type: 'list', choices: [...Status]}
   ])
 
   let subject = new Subject(
@@ -192,6 +197,45 @@ const removeSubmenu = async () => {
       welcome();
       break;
   }
+}
+
+const updateSubject = async () => {
+  console.clear()
+  titleConsole(EDIT)
+  let answer = await questionConsole([{message: "Search by name:"}])
+  const oldSubject = pensum.getSubjectByName(answer['Search by name:'])
+
+  if (oldSubject) {
+    console.table(oldSubject)
+    separatorConsole()
+
+    answer = await questionConsole([
+      {message: 'Code:', def: oldSubject.code},
+      {message: 'Name:', def: oldSubject.name},
+      {message: 'Credit:', def: oldSubject.credit},
+      {message: 'Prerequisite:', def: oldSubject.prerequisite},
+      {message: 'Status:', type: 'list', choices: [...Status]}
+    ])
+  
+    const subjectUpdated = new Subject(
+      answer['Code:'], 
+      answer['Name:'], 
+      answer['Credit:'], 
+      answer['Prerequisite:'], 
+      answer['Status:']
+    )
+
+    const confirmation = await yesOrNot("Are you sure you want to update this subject?");
+    if (confirmation) {
+      pensum.updateSubject(subjectUpdated, oldSubject);
+      successConsole("Subject updated successfully!")
+    } else {
+      infoConsole("Subject not updated")
+    }
+  } else {
+    infoConsole(`Can't find a subject for: ${answer['Search by name:']}`)
+  }
+  
 }
 
 export const questionConsole = async (questions = [{message, def, type, choices}]) => {

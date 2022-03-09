@@ -37,6 +37,12 @@ class Pensum {
     this.subjectList.splice(index, 1);
     this.savePensum()
   }
+
+  updateSubject(subjectUpdated, oldSubject) {
+    const index = this.getSubjectIndex(oldSubject)
+    this.subjectList[index] = subjectUpdated;
+    this.savePensum()
+  }
   
   savePensum(){
     return writeFile(this.subjectList)
