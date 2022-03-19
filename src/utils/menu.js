@@ -12,7 +12,12 @@ export const REMOVE_ANOTHER = "Remove another subject";
 export const EDIT_ANOTHER = "Edit another subject";
 
 export const Menu = [LIST, ADD, SEARCH, EDIT, REMOVE, CLOSE];
-export const SearchSubmenu = [EDIT_THIS, SEARCH_ANOTHER, REMOVE_THIS, BACK_TO_MENU];
+export const SearchSubmenu = [
+  EDIT_THIS,
+  SEARCH_ANOTHER,
+  REMOVE_THIS,
+  BACK_TO_MENU,
+];
 export const MiniSearchSubmenu = [SEARCH_ANOTHER, BACK_TO_MENU];
-export const RemoveSubmenu = [REMOVE_ANOTHER, BACK_TO_MENU]
-export const UpdateSubmenu = [EDIT_ANOTHER, BACK_TO_MENU]
+export const RemoveSubmenu = [REMOVE_ANOTHER, BACK_TO_MENU];
+export const UpdateSubmenu = [EDIT_ANOTHER, BACK_TO_MENU];

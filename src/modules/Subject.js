@@ -1,61 +1,75 @@
-import { APPROVED, FAILED, IN_PROGRESS, PENDING, VALIDATED } from "../utils/subject.js";
+import {
+  APPROVED,
+  FAILED,
+  IN_PROGRESS,
+  PENDING,
+  VALIDATED,
+} from "../utils/subject.js";
 
 class Subject {
-
-  constructor(code, name, credit, prerequisite, status){
-      this.code = code;
-      this.name = name;
-      this.credit = credit;
-      this.prerequisite = prerequisite;
-      this.status = status;
+  constructor(code, name, credit, prerequisite, status) {
+    this.code = code;
+    this.name = name;
+    this.credit = credit;
+    this.prerequisite = prerequisite;
+    this.status = status;
   }
 
-  //======================
+  //= =====================
 
-  getCode(){
-    return this.code
+  getCode() {
+    return this.code;
   }
-  setCode(value){
+
+  setCode(value) {
     this.code = value;
   }
 
-  getName(){
-    return this.name
+  getName() {
+    return this.name;
   }
-  setName(value){
+
+  setName(value) {
     this.name = value;
   }
 
-  getCredit(){
-    return this.credit
+  getCredit() {
+    return this.credit;
   }
-  setCredit(value){
+
+  setCredit(value) {
     this.credit = value;
   }
 
-  getPrerequisite(){
-    return this.prerequisite
+  getPrerequisite() {
+    return this.prerequisite;
   }
-  setPrerequisite(value){
+
+  setPrerequisite(value) {
     this.prerequisite = value;
   }
 
-  getStatus(){
-    return this.status
+  getStatus() {
+    return this.status;
   }
-  setPending(){
+
+  setPending() {
     this.status = PENDING;
   }
-  setValidated(){
+
+  setValidated() {
     this.status = VALIDATED;
   }
-  setApproved(){
+
+  setApproved() {
     this.status = APPROVED;
   }
-  setFailed(){
+
+  setFailed() {
     this.status = FAILED;
   }
-  setInProgress(){
+
+  setInProgress() {
     this.status = IN_PROGRESS;
   }
 }
