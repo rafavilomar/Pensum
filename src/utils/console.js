@@ -10,7 +10,7 @@ const rl = readline.createInterface({
 // =================================================================================
 
 export const errorConsole = (value) => {
-  console.error(chalk.bgRed(value));
+  console.error(chalk.red(value));
 };
 
 export const infoConsole = (value) => {
@@ -18,7 +18,7 @@ export const infoConsole = (value) => {
 };
 
 export const separatorConsole = () => {
-  inquirer.Separator();
+  new inquirer.Separator();
 };
 
 export const titleConsole = (value) => {
