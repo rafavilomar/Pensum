@@ -22,7 +22,7 @@ import {
   EDIT_ANOTHER,
   EDIT_THIS,
   MiniSearchSubmenu,
-} from "../utils/menu.js";
+} from "../utils/identifiers.js";
 import {
   infoConsole,
   loadingConsole,
