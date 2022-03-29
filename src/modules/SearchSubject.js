@@ -12,12 +12,10 @@ import {
   EDIT_THIS,
   MiniSearchSubmenu,
 } from "../utils/identifiers.js";
-import {
-  infoConsole,
-  successConsole,
-  titleConsole,
-} from "../utils/console.js";
+import { infoConsole, successConsole, titleConsole } from "../utils/console.js";
 import Status from "../utils/subject.js";
+import { backToMenu, questionConsole, yesOrNot } from "../utils/iteraction.js";
+import welcome from "./Welcome.js";
 
 const pensum = new Pensum();
 
@@ -37,7 +35,7 @@ const searchSubmenu = async (subject) => {
       break;
 
     case REMOVE_THIS:
-      pensum.removeSubject(subject);
+      await pensum.removeSubject(subject);
       successConsole("Subject removed successfully!");
       backToMenu();
       break;
@@ -59,7 +57,7 @@ const searchSubmenu = async (subject) => {
         answer["Status:"]
       );
 
-      pensum.updateSubject(subjectUpdated, subject);
+      await pensum.updateSubject(subjectUpdated, subject);
       successConsole("Subject updated successfully!");
       backToMenu();
       break;
@@ -74,7 +72,7 @@ const searchSubmenu = async (subject) => {
   }
 };
 
-export const searchSubject = async () => {
+const searchSubject = async () => {
   console.clear();
   titleConsole(SEARCH);
   const answer = await questionConsole([{ message: "Search by name:" }]);
@@ -113,3 +111,5 @@ const miniSearchSubmenu = async () => {
       break;
   }
 };
+
+export default searchSubject;

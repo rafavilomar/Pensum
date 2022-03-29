@@ -2,19 +2,19 @@ import Pensum from "./Pensum.js";
 import Subject from "./Subject.js";
 
 // Utils
-import {
-  ADD,
-} from "../utils/identifiers.js";
+import { ADD } from "../utils/identifiers.js";
 import {
   loadingConsole,
   successConsole,
   titleConsole,
 } from "../utils/console.js";
 import Status from "../utils/subject.js";
+import welcome from "./Welcome.js";
+import { questionConsole, yesOrNot } from "../utils/iteraction.js";
 
 const pensum = new Pensum();
 
-export const addSubject = async () => {
+const addSubject = async () => {
   console.clear();
   titleConsole(ADD);
   const answer = await questionConsole([
@@ -53,3 +53,5 @@ export const addSubject = async () => {
     }
   });
 };
+
+export default addSubject;

@@ -16,6 +16,8 @@ import {
   titleConsole,
 } from "../utils/console.js";
 import Status from "../utils/subject.js";
+import { questionConsole, yesOrNot } from "../utils/iteraction.js";
+import welcome from "./Welcome.js";
 
 const pensum = new Pensum();
 
@@ -23,7 +25,7 @@ const updateSubject = async () => {
   console.clear();
   titleConsole(EDIT);
   let answer = await questionConsole([{ message: "Search by name:" }]);
-  const oldSubject = pensum.getSubjectByName(answer["Search by name:"]);
+  const oldSubject = await pensum.getSubjectByName(answer["Search by name:"]);
 
   if (oldSubject) {
     console.table(oldSubject);
@@ -49,7 +51,7 @@ const updateSubject = async () => {
       "Are you sure you want to update this subject?"
     );
     if (confirmation) {
-      pensum.updateSubject(subjectUpdated, oldSubject);
+      await pensum.updateSubject(subjectUpdated, oldSubject);
       successConsole("Subject updated successfully!");
     } else {
       infoConsole("Subject not updated");
@@ -84,3 +86,5 @@ const editSubmenu = async () => {
       break;
   }
 };
+
+export default updateSubject;

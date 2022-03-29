@@ -1,9 +1,29 @@
+import inquirer from "inquirer";
+import Pensum from "./Pensum.js";
+
+// Utils
+import {
+  BACK_TO_MENU,
+  REMOVE,
+  RemoveSubmenu,
+  REMOVE_ANOTHER,
+} from "../utils/identifiers.js";
+import {
+  infoConsole,
+  separatorConsole,
+  successConsole,
+  titleConsole,
+} from "../utils/console.js";
+import { questionConsole, yesOrNot } from "../utils/iteraction.js";
+import welcome from "./Welcome.js";
+
+const pensum = new Pensum();
 
 const removeSubject = async () => {
   console.clear();
   titleConsole(REMOVE);
   const answer = await questionConsole([{ message: "Search by name:" }]);
-  const subject = pensum.getSubjectByName(answer["Search by name:"]);
+  const subject = await pensum.getSubjectByName(answer["Search by name:"]);
 
   if (subject) {
     // CONFIRMATION
@@ -13,7 +33,7 @@ const removeSubject = async () => {
       "Are you sure you want to remove this subject?"
     );
     if (confirmation) {
-      pensum.removeSubject(subject);
+      await pensum.removeSubject(subject);
       successConsole("Subject removed successfully!");
     } else {
       infoConsole("Subject not removed");
@@ -48,3 +68,5 @@ const removeSubmenu = async () => {
       break;
   }
 };
+
+export default removeSubject;

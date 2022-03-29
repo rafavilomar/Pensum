@@ -4,18 +4,17 @@ import inquirer from "inquirer";
 import Pensum from "./Pensum.js";
 
 // Utils
-import {
-  Menu,
-  ADD,
-  EDIT,
-  LIST,
-  SEARCH,
-  REMOVE,
-} from "../utils/identifiers.js";
+import { Menu, ADD, EDIT, LIST, SEARCH, REMOVE } from "../utils/identifiers.js";
+import addSubject from "./AddSubject.js";
+import searchSubject from "./SearchSubject.js";
+import removeSubject from "./RemoveSubject.js";
+import updateSubject from "./EditSubject.js";
+import { titleConsole } from "../utils/console.js";
+import { backToMenu } from "../utils/iteraction.js";
 
 const pensum = new Pensum();
 
-export const welcome = () => {
+const welcome = () => {
   console.clear();
   figlet("Pensum", async (error, result) => {
     console.log(chalk.yellow(result));
@@ -26,7 +25,7 @@ export const welcome = () => {
   });
 };
 
-export const menu = async () => {
+const menu = async () => {
   const action = await inquirer.prompt([
     {
       type: "list",
@@ -38,7 +37,7 @@ export const menu = async () => {
 
   switch (action.menu) {
     case LIST:
-      showList(pensum.getSubjectList());
+      showList();
       break;
 
     case ADD:
@@ -62,3 +61,13 @@ export const menu = async () => {
       break;
   }
 };
+
+const showList = async () => {
+  console.clear();
+  titleConsole(LIST);
+  console.table(await pensum.getSubjectList());
+
+  await backToMenu();
+};
+
+export default welcome;
