@@ -14,7 +14,10 @@ import {
   successConsole,
   titleConsole,
 } from "../utils/console.js";
-import { questionConsole, yesOrNot } from "../utils/iteraction.js";
+import {
+  searchByName,
+  yesOrNot,
+} from "../utils/iteraction.js";
 import welcome from "./Welcome.js";
 
 const pensum = new Pensum();
@@ -22,27 +25,22 @@ const pensum = new Pensum();
 const removeSubject = async () => {
   console.clear();
   titleConsole(REMOVE);
-  const answer = await questionConsole([{ message: "Search by name:" }]);
-  const subject = await pensum.getSubjectByName(answer["Search by name:"]);
 
-  if (subject) {
-    // CONFIRMATION
-    console.table(subject);
-    separatorConsole();
-    const confirmation = await yesOrNot(
-      "Are you sure you want to remove this subject?"
-    );
-    if (confirmation) {
-      await pensum.removeSubject(subject);
-      successConsole("Subject removed successfully!");
-    } else {
-      infoConsole("Subject not removed");
-    }
-  } else {
-    infoConsole(`Can't find a subject for: ${answer["Search by name:"]}`);
-  }
-
-  await removeSubmenu();
+  searchByName()
+    .then(async (subject) => {
+      separatorConsole();
+      const confirmation = await yesOrNot(
+        "Are you sure you want to remove this subject?"
+      );
+      if (confirmation) {
+        await pensum.removeSubject(subject);
+        successConsole("Subject removed successfully!");
+      } else {
+        infoConsole("Subject not removed");
+      }
+      removeSubmenu();
+    })
+    .catch(() => removeSubmenu());
 };
 
 const removeSubmenu = async () => {

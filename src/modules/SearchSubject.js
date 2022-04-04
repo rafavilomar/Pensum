@@ -12,9 +12,13 @@ import {
   EDIT_THIS,
   MiniSearchSubmenu,
 } from "../utils/identifiers.js";
-import { infoConsole, successConsole, titleConsole } from "../utils/console.js";
+import { successConsole, titleConsole } from "../utils/console.js";
 import Status from "../utils/subject.js";
-import { backToMenu, questionConsole, yesOrNot } from "../utils/iteraction.js";
+import {
+  backToMenu,
+  questionConsole,
+  searchByName,
+} from "../utils/iteraction.js";
 import welcome from "./Welcome.js";
 
 const pensum = new Pensum();
@@ -75,16 +79,10 @@ const searchSubmenu = async (subject) => {
 const searchSubject = async () => {
   console.clear();
   titleConsole(SEARCH);
-  const answer = await questionConsole([{ message: "Search by name:" }]);
-  const subject = await pensum.getSubjectByName(answer["Search by name:"]);
 
-  if (subject) {
-    console.table(subject);
-    await searchSubmenu(subject);
-  } else {
-    infoConsole(`Can't find a subject for: ${answer["Search by name:"]}`);
-    await miniSearchSubmenu();
-  }
+  searchByName()
+    .then((subject) => searchSubmenu(subject))
+    .catch(() => miniSearchSubmenu());
 };
 
 const miniSearchSubmenu = async () => {

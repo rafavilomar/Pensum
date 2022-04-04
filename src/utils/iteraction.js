@@ -1,5 +1,9 @@
 import inquirer from "inquirer";
+import Pensum from "../modules/Pensum.js";
 import welcome from "../modules/Welcome.js";
+import { infoConsole } from "./console.js";
+
+const pensum = new Pensum();
 
 export const questionConsole = async (questions = []) => {
   const format = [];
@@ -41,4 +45,17 @@ export const yesOrNot = async (question) => {
     return true;
   }
   return false;
+};
+
+export const searchByName = async () => {
+  const answer = await questionConsole([{ message: "Search by name:" }]);
+  const subject = await pensum.getSubjectByName(answer["Search by name:"]);
+
+  if (subject) {
+    console.table(subject);
+    return Promise.resolve(subject);
+  } else {
+    infoConsole(`Can't find a subject for: ${answer["Search by name:"]}`);
+    await Promise.reject();
+  }
 };

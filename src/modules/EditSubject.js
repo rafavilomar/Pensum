@@ -16,7 +16,11 @@ import {
   titleConsole,
 } from "../utils/console.js";
 import Status from "../utils/subject.js";
-import { questionConsole, yesOrNot } from "../utils/iteraction.js";
+import {
+  questionConsole,
+  searchByName,
+  yesOrNot,
+} from "../utils/iteraction.js";
 import welcome from "./Welcome.js";
 
 const pensum = new Pensum();
@@ -24,43 +28,41 @@ const pensum = new Pensum();
 const updateSubject = async () => {
   console.clear();
   titleConsole(EDIT);
-  let answer = await questionConsole([{ message: "Search by name:" }]);
-  const oldSubject = await pensum.getSubjectByName(answer["Search by name:"]);
 
-  if (oldSubject) {
-    console.table(oldSubject);
-    separatorConsole();
+  searchByName()
+    .then(async (oldSubject) => {
+      separatorConsole();
 
-    answer = await questionConsole([
-      { message: "Code:", def: oldSubject.code },
-      { message: "Name:", def: oldSubject.name },
-      { message: "Credit:", def: oldSubject.credit },
-      { message: "Prerequisite:", def: oldSubject.prerequisite },
-      { message: "Status:", type: "list", choices: [...Status] },
-    ]);
+      const answer = await questionConsole([
+        { message: "Code:", def: oldSubject.code },
+        { message: "Name:", def: oldSubject.name },
+        { message: "Credit:", def: oldSubject.credit },
+        { message: "Prerequisite:", def: oldSubject.prerequisite },
+        { message: "Status:", type: "list", choices: [...Status] },
+      ]);
 
-    const subjectUpdated = new Subject(
-      answer["Code:"],
-      answer["Name:"],
-      answer["Credit:"],
-      answer["Prerequisite:"],
-      answer["Status:"]
-    );
+      const subjectUpdated = new Subject(
+        answer["Code:"],
+        answer["Name:"],
+        answer["Credit:"],
+        answer["Prerequisite:"],
+        answer["Status:"]
+      );
 
-    const confirmation = await yesOrNot(
-      "Are you sure you want to update this subject?"
-    );
-    if (confirmation) {
-      await pensum.updateSubject(subjectUpdated, oldSubject);
-      successConsole("Subject updated successfully!");
-    } else {
-      infoConsole("Subject not updated");
-    }
-  } else {
-    infoConsole(`Can't find a subject for: ${answer["Search by name:"]}`);
-  }
-
-  await editSubmenu();
+      const confirmation = await yesOrNot(
+        "Are you sure you want to update this subject?"
+      );
+      if (confirmation) {
+        await pensum.updateSubject(subjectUpdated, oldSubject);
+        successConsole("Subject updated successfully!");
+      } else {
+        infoConsole("Subject not updated");
+      }
+      editSubmenu();
+    })
+    .catch(() => {
+      editSubmenu();
+    });
 };
 
 const editSubmenu = async () => {
