@@ -22,25 +22,27 @@ class Pensum {
     });
   }
 
-  getSubjectByName(subjectName) {
+  async getSubjectByName(subjectName) {
+    this.subjectList = await readFile();
     const subject = this.subjectList.find(
       (e) => e.name.toLowerCase() === subjectName
     );
     return subject;
   }
 
-  getSubjectIndex(subject) {
+  async getSubjectIndex(subject) {
+    this.subjectList = await readFile();
     return this.subjectList.indexOf(subject);
   }
 
-  removeSubject(subject) {
-    const index = this.getSubjectIndex(subject);
+  async removeSubject(subject) {
+    const index = await this.getSubjectIndex(subject);
     this.subjectList.splice(index, 1);
     this.savePensum();
   }
 
-  updateSubject(subjectUpdated, oldSubject) {
-    const index = this.getSubjectIndex(oldSubject);
+  async updateSubject(subjectUpdated, oldSubject) {
+    const index = await this.getSubjectIndex(oldSubject);
     this.subjectList[index] = subjectUpdated;
     this.savePensum();
   }
@@ -51,7 +53,8 @@ class Pensum {
 
   //= =====================
 
-  getSubjectList() {
+  async getSubjectList() {
+    this.subjectList = await readFile();
     return this.subjectList;
   }
 

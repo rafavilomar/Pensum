@@ -1,4 +1,4 @@
-import { welcome } from "./modules/Interaction.js";
+import welcome from "./modules/Welcome.js";
 
 const main = async () => {
   welcome();
