@@ -38,13 +38,8 @@ export const backToMenu = async () => {
 
 export const yesOrNot = async (question) => {
   const answer = await questionConsole([{ message: question, def: "Yes" }]);
-  if (
-    answer[question].toLowerCase() === "yes" ||
-    answer[question].toLowerCase() === "y"
-  ) {
-    return true;
-  }
-  return false;
+  return answer[question].toLowerCase() === "yes" ||
+    answer[question].toLowerCase() === "y";
 };
 
 export const searchByName = async () => {
