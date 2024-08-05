@@ -11,7 +11,10 @@ import {
 import Status from "../utils/subject.js";
 import welcome from "./Welcome.js";
 import { questionConsole, yesOrNot } from "../utils/iteraction.js";
-import { isValidPrerequisite, wrongPrerequisiteMessage } from "../utils/prerequisite.js";
+import {
+  isValidPrerequisite,
+  wrongPrerequisiteMessage,
+} from "../utils/prerequisite.js";
 
 const pensum = new Pensum();
 
@@ -37,9 +40,11 @@ const addSubject = async () => {
     console.table(subject);
     const save = await yesOrNot("Save changes?");
     if (save) {
-      
-      if (subject.prerequisite && !await isValidPrerequisite(subject.prerequisite)) {
-        return wrongPrerequisiteMessage(subject.prerequisite, addSubject)
+      if (
+        subject.prerequisite &&
+        !(await isValidPrerequisite(subject.prerequisite))
+      ) {
+        return wrongPrerequisiteMessage(subject.prerequisite, addSubject);
       }
 
       loadingConsole("Saving changes...");
