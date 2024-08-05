@@ -10,8 +10,9 @@ export const SEARCH_ANOTHER = "Search another subject";
 export const REMOVE_THIS = "Remove this subject";
 export const REMOVE_ANOTHER = "Remove another subject";
 export const EDIT_ANOTHER = "Edit another subject";
+export const GET_RECOMMENDED_SUBJECTS = "Get recommended subjects for the next period"
 
-export const Menu = [LIST, ADD, SEARCH, EDIT, REMOVE, CLOSE];
+export const Menu = [LIST, ADD, SEARCH, EDIT, REMOVE, GET_RECOMMENDED_SUBJECTS, CLOSE];
 export const SearchSubmenu = [
   EDIT_THIS,
   SEARCH_ANOTHER,
