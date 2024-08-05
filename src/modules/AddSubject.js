@@ -15,7 +15,7 @@ import {
   isValidPrerequisite,
   wrongPrerequisiteMessage,
 } from "../utils/prerequisite.js";
-import { isUniqueCode_NewSubject, wrongCodeMessage } from "../utils/code.js";
+import { isUniqueCode, wrongCodeMessage } from "../utils/code.js";
 
 const pensum = new Pensum();
 
@@ -41,8 +41,7 @@ const addSubject = async () => {
     console.table(subject);
     const save = await yesOrNot("Save changes?");
     if (save) {
-
-      if (!await isUniqueCode_NewSubject(subject.code)) {
+      if (!(await isUniqueCode(subject.code))) {
         return wrongCodeMessage(subject.code, addSubject);
       }
 
