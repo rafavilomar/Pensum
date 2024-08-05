@@ -1,23 +1,3 @@
-/**
- * Handle a list of recommended subjects, but it will have this extra property:
- *      - impact: number (How many subject this subject unlock)
- * 
- * For each subject in the json:
- *      IF prerequisite is null OR (it correspond to an approved OR validated subject) 
- *      AND status == "PENDING" OR == "FAILED"
- *          count how many subject will be unlocked by this subject
- *          add it to the recommended subjects list
- * 
- * How to add a subject to the recommended list:
- *      IF there is another subject on the list with a lower impact
- *          put the new subject before that
- *      ELSE
- *          put the new subject at the end of the list
- * 
- *      IF the size of the recommended list > 10
- *          Delete the last subject
- */
-
 import { titleConsole } from "../utils/console.js"
 import { GET_RECOMMENDED_SUBJECTS } from "../utils/identifiers.js"
 import { backToMenu } from "../utils/iteraction.js"
@@ -26,7 +6,6 @@ import { readFile } from "./File.js"
 
 let RECOMMENDED_SUBJECTS = []
 let ALL_SUBJECTS = []
-
     
 const getRecommendedSubjects = async () => {
     console.clear();
