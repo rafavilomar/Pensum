@@ -22,6 +22,10 @@ import {
   yesOrNot,
 } from "../utils/iteraction.js";
 import welcome from "./Welcome.js";
+import {
+  isValidPrerequisite,
+  wrongPrerequisiteMessage,
+} from "../utils/prerequisite.js";
 
 const pensum = new Pensum();
 
@@ -53,6 +57,16 @@ const updateSubject = async () => {
         "Are you sure you want to update this subject?"
       );
       if (confirmation) {
+        if (
+          subjectUpdated.prerequisite &&
+          !(await isValidPrerequisite(subjectUpdated.prerequisite))
+        ) {
+          return wrongPrerequisiteMessage(
+            subjectUpdated.prerequisite,
+            updateSubject
+          );
+        }
+
         await pensum.updateSubject(subjectUpdated, oldSubject);
         successConsole("Subject updated successfully!");
       } else {

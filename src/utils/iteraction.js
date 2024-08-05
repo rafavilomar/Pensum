@@ -38,8 +38,10 @@ export const backToMenu = async () => {
 
 export const yesOrNot = async (question) => {
   const answer = await questionConsole([{ message: question, def: "Yes" }]);
-  return answer[question].toLowerCase() === "yes" ||
-    answer[question].toLowerCase() === "y";
+  return (
+    answer[question].toLowerCase() === "yes" ||
+    answer[question].toLowerCase() === "y"
+  );
 };
 
 export const searchByName = async () => {
@@ -49,8 +51,7 @@ export const searchByName = async () => {
   if (subject) {
     console.table(subject);
     return Promise.resolve(subject);
-  } else {
-    infoConsole(`Can't find a subject for: ${answer["Search by name:"]}`);
-    await Promise.reject();
   }
+  infoConsole(`Can't find a subject for: ${answer["Search by name:"]}`);
+  await Promise.reject();
 };

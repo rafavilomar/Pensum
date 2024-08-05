@@ -4,7 +4,15 @@ import inquirer from "inquirer";
 import Pensum from "./Pensum.js";
 
 // Utils
-import { Menu, ADD, EDIT, LIST, SEARCH, REMOVE, GET_RECOMMENDED_SUBJECTS } from "../utils/identifiers.js";
+import {
+  Menu,
+  ADD,
+  EDIT,
+  LIST,
+  SEARCH,
+  REMOVE,
+  GET_RECOMMENDED_SUBJECTS,
+} from "../utils/identifiers.js";
 import addSubject from "./AddSubject.js";
 import searchSubject from "./SearchSubject.js";
 import removeSubject from "./RemoveSubject.js";

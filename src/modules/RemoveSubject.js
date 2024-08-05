@@ -14,10 +14,7 @@ import {
   successConsole,
   titleConsole,
 } from "../utils/console.js";
-import {
-  searchByName,
-  yesOrNot,
-} from "../utils/iteraction.js";
+import { searchByName, yesOrNot } from "../utils/iteraction.js";
 import welcome from "./Welcome.js";
 
 const pensum = new Pensum();
