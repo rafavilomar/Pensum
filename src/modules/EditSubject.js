@@ -26,6 +26,7 @@ import {
   isValidPrerequisite,
   wrongPrerequisiteMessage,
 } from "../utils/prerequisite.js";
+import { isUniqueCode, wrongCodeMessage } from "../utils/code.js";
 
 const pensum = new Pensum();
 
@@ -57,6 +58,13 @@ const updateSubject = async () => {
         "Are you sure you want to update this subject?"
       );
       if (confirmation) {
+        if (
+          oldSubject.code !== subjectUpdated.code &&
+          !(await isUniqueCode(subjectUpdated.code))
+        ) {
+          return wrongCodeMessage(subjectUpdated.code, updateSubject);
+        }
+
         if (
           subjectUpdated.prerequisite &&
           !(await isValidPrerequisite(subjectUpdated.prerequisite))
