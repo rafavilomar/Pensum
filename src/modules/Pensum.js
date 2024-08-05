@@ -25,7 +25,7 @@ class Pensum {
   async getSubjectByName(subjectName) {
     this.subjectList = await readFile();
     const subject = this.subjectList.find(
-      (e) => e.name.toLowerCase() === subjectName
+      (e) => e.name.toLowerCase() === subjectName.toLowerCase()
     );
     return subject;
   }
