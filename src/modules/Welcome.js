@@ -4,13 +4,14 @@ import inquirer from "inquirer";
 import Pensum from "./Pensum.js";
 
 // Utils
-import { Menu, ADD, EDIT, LIST, SEARCH, REMOVE } from "../utils/identifiers.js";
+import { Menu, ADD, EDIT, LIST, SEARCH, REMOVE, GET_RECOMMENDED_SUBJECTS } from "../utils/identifiers.js";
 import addSubject from "./AddSubject.js";
 import searchSubject from "./SearchSubject.js";
 import removeSubject from "./RemoveSubject.js";
 import updateSubject from "./EditSubject.js";
 import { titleConsole } from "../utils/console.js";
 import { backToMenu } from "../utils/iteraction.js";
+import getRecommendedSubjects from "./RecomendedSubjects.js";
 
 const pensum = new Pensum();
 
@@ -54,6 +55,10 @@ const menu = async () => {
 
     case EDIT:
       updateSubject();
+      break;
+
+    case GET_RECOMMENDED_SUBJECTS:
+      getRecommendedSubjects();
       break;
 
     default:
