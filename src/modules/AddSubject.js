@@ -4,6 +4,7 @@ import Subject from "./Subject.js";
 // Utils
 import { ADD } from "../utils/identifiers.js";
 import {
+  errorConsole,
   loadingConsole,
   successConsole,
   titleConsole,
@@ -11,6 +12,7 @@ import {
 import Status from "../utils/subject.js";
 import welcome from "./Welcome.js";
 import { questionConsole, yesOrNot } from "../utils/iteraction.js";
+import { readFile } from "./File.js";
 
 const pensum = new Pensum();
 
@@ -36,6 +38,11 @@ const addSubject = async () => {
     console.table(subject);
     const save = await yesOrNot("Save changes?");
     if (save) {
+      
+      if (subject.prerequisite && !await isValidPrerequisite(subject.prerequisite)) {
+        return wrongPrerequisiteMessage(subject.prerequisite)
+      }
+
       loadingConsole("Saving changes...");
       pensum.savePensum().then(() => {
         setTimeout(async () => {
@@ -53,5 +60,21 @@ const addSubject = async () => {
     }
   });
 };
+
+const isValidPrerequisite = async (prerequisite) => {
+  loadingConsole("Validating prerequisite...");
+  const ALL_SUBJECTS = await readFile();
+  return ALL_SUBJECTS.some(subject => subject.code === subject.prerequisite)
+}
+
+const wrongPrerequisiteMessage = async (prerequisite) => {
+  errorConsole(`Could not find an existing subject with code: ${prerequisite}`)
+  const AGAIN = await yesOrNot("Try again?");
+  if (AGAIN) {
+    addSubject();
+  } else {
+    welcome();
+  }
+}
 
 export default addSubject;
