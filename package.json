@@ -1,7 +1,7 @@
 {
   "name": "pensum",
   "version": "1.0.0",
-  "description": "",
+  "description": "A curricular tool for students to keep track of their coursework",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
