@@ -1,6 +1,6 @@
 {
   "name": "pensum",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A curricular tool for students to keep track of their coursework",
   "main": "index.js",
   "scripts": {
@@ -30,5 +30,9 @@
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "pensum": "node src/index.js"
   }
 }
