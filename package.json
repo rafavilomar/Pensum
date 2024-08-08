@@ -1,6 +1,6 @@
 {
   "name": "pensum",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A curricular tool for students to keep track of their coursework",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,6 @@
   },
   "preferGlobal": true,
   "bin": {
-    "pensum": "node src/index.js"
+    "pensum": "src/index.js"
   }
 }
