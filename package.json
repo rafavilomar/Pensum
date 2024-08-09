@@ -1,7 +1,7 @@
 {
   "name": "pensum",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.4",
+  "description": "A curricular tool for students to keep track of their coursework",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -9,8 +9,13 @@
     "lint-fix": "eslint . --ext .js --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "Rafael Vilomar <rafavilomar@gmail.com>",
+  "keywords": [
+    "curricular",
+    "coursework",
+    "curriculum"
+  ],
+  "author": "Rafael Vilomar(https://github.com/rafavilomar)",
+  "repository": "github:rafavilomar/Pensum",
   "license": "MIT",
   "type": "module",
   "dependencies": {
@@ -25,5 +30,9 @@
     "eslint-config-prettier": "^8.4.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "pensum": "src/index.js"
   }
 }
