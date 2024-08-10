@@ -21,7 +21,7 @@ import {
 } from "../utils/iteraction.js";
 import welcome from "./Welcome.js";
 
-const pensum = new Pensum();
+const pensum = Pensum.getInstance();
 
 const searchSubmenu = async (subject) => {
   const action = await inquirer.prompt([

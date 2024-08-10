@@ -1,67 +1,63 @@
 import { readFile, writeFile } from "./File.js";
 
 class Pensum {
+  static #instance
+  #subjectList
+
   constructor() {
-    new Promise(async (resolve, reject) => {
-      try {
-        this.subjectList = await readFile();
-        resolve(this);
-      } catch (error) {
-        reject(error);
-      }
-    });
+    readFile().then(list => this.#subjectList = list)
+  }
+
+  static getInstance(){
+    if (!this.#instance) {
+      this.#instance = new Pensum();
+    }
+    return this.#instance;
   }
 
   newSubject(subject) {
-    return new Promise((resolve) => {
-      const list = this.subjectList;
-      list.push(subject);
-      this.subjectList = list;
-
-      resolve(this.subjectList);
-    });
+    this.#subjectList.push(subject);
+    this.savePensum();
+    return this.#subjectList;
   }
 
   async getSubjectByName(subjectName) {
-    this.subjectList = await readFile();
-    const subject = this.subjectList.find(
+    return this.#subjectList.find(
       (e) => e.name.toLowerCase() === subjectName.toLowerCase()
     );
-    return subject;
   }
 
   async getSubjectIndex(subject) {
-    this.subjectList = await readFile();
-    return this.subjectList.findIndex(
+    return this.#subjectList.findIndex(
       (e) => JSON.stringify(e) === JSON.stringify(subject)
     );
   }
 
   async removeSubject(subject) {
     const index = await this.getSubjectIndex(subject);
-    this.subjectList.splice(index, 1);
+    this.#subjectList.splice(index, 1);
     this.savePensum();
   }
 
   async updateSubject(subjectUpdated, oldSubject) {
     const index = await this.getSubjectIndex(oldSubject);
-    this.subjectList[index] = subjectUpdated;
+    this.#subjectList[index] = subjectUpdated;
     this.savePensum();
   }
 
   savePensum() {
-    return writeFile(this.subjectList);
+    return writeFile(this.#subjectList);
   }
 
   //= =====================
 
   async getSubjectList() {
-    this.subjectList = await readFile();
-    return this.subjectList;
+    // this.#subjectList = await readFile();
+    return this.#subjectList;
   }
 
   setSubjectList(value) {
-    this.subjectList = value;
+    this.#subjectList = value;
   }
 }
 export default Pensum;

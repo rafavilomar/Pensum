@@ -28,7 +28,7 @@ import {
 } from "../utils/prerequisite.js";
 import { isUniqueCode, wrongCodeMessage } from "../utils/code.js";
 
-const pensum = new Pensum();
+const pensum = Pensum.getInstance();
 
 const updateSubject = async () => {
   console.clear();

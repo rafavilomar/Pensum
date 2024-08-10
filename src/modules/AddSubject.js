@@ -17,7 +17,7 @@ import {
 } from "../utils/prerequisite.js";
 import { isUniqueCode, wrongCodeMessage } from "../utils/code.js";
 
-const pensum = new Pensum();
+const pensum = Pensum.getInstance();
 
 const addSubject = async () => {
   console.clear();
@@ -37,37 +37,33 @@ const addSubject = async () => {
     answer["Prerequisite:"],
     answer["Status:"]
   );
-  pensum.newSubject(subject).then(async () => {
-    console.table(subject);
-    const save = await yesOrNot("Save changes?");
-    if (save) {
-      if (!(await isUniqueCode(subject.code))) {
+  
+  console.table(subject);
+  const save = await yesOrNot("Save changes?");
+  if (save) {
+    if (!(await isUniqueCode(subject.code))) {
         return wrongCodeMessage(subject.code, addSubject);
-      }
-
-      if (
-        subject.prerequisite &&
-        !(await isValidPrerequisite(subject.prerequisite))
-      ) {
-        return wrongPrerequisiteMessage(subject.prerequisite, addSubject);
-      }
-
-      loadingConsole("Saving changes...");
-      pensum.savePensum().then(() => {
-        setTimeout(async () => {
-          successConsole("Save successfully!");
-          const addMore = await yesOrNot("Add more subjects?");
-          if (addMore) {
-            addSubject();
-          } else {
-            welcome();
-          }
-        }, 1000);
-      });
-    } else {
-      welcome();
     }
-  });
+    if (
+      subject.prerequisite &&
+      !(await isValidPrerequisite(subject.prerequisite))
+    ) {
+      return wrongPrerequisiteMessage(subject.prerequisite, addSubject);
+    }
+    loadingConsole("Saving changes...");
+    pensum.newSubject(subject)
+      setTimeout(async () => {
+        successConsole("Save successfully!");
+        const addMore = await yesOrNot("Add more subjects?");
+        if (addMore) {
+          addSubject();
+        } else {
+          welcome();
+        }
+      }, 1000);
+  } else {
+    welcome();
+  }
 };
 
 export default addSubject;
