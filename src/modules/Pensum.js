@@ -32,7 +32,9 @@ class Pensum {
 
   async getSubjectIndex(subject) {
     this.subjectList = await readFile();
-    return this.subjectList.indexOf(subject);
+    return this.subjectList.findIndex(
+      (e) => JSON.stringify(e) === JSON.stringify(subject)
+    );
   }
 
   async removeSubject(subject) {
