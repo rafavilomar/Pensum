@@ -19,9 +19,9 @@ import removeSubject from "./RemoveSubject.js";
 import updateSubject from "./EditSubject.js";
 import { titleConsole } from "../utils/console.js";
 import { backToMenu } from "../utils/iteraction.js";
-import getRecommendedSubjects from "./RecomendedSubjects.js";
+import getRecommendedSubjects from "./RecommendedSubjects.js";
 
-const pensum = new Pensum();
+const pensum = Pensum.getInstance();
 
 const welcome = () => {
   console.clear();

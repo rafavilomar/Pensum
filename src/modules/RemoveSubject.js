@@ -17,7 +17,7 @@ import {
 import { searchByName, yesOrNot } from "../utils/iteraction.js";
 import welcome from "./Welcome.js";
 
-const pensum = new Pensum();
+const pensum = Pensum.getInstance();
 
 const removeSubject = async () => {
   console.clear();

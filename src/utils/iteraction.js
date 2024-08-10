@@ -3,7 +3,7 @@ import Pensum from "../modules/Pensum.js";
 import welcome from "../modules/Welcome.js";
 import { infoConsole } from "./console.js";
 
-const pensum = new Pensum();
+const pensum = Pensum.getInstance();
 
 export const questionConsole = async (questions = []) => {
   const format = [];

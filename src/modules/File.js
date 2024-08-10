@@ -32,6 +32,7 @@ export const readFile = () => {
     fs.readFile(PATH, (err, data) => {
       if (err) {
         writeFile([]);
+        resolve([]);
       } else {
         try {
           resolve(JSON.parse(data));
