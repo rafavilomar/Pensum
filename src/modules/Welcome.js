@@ -28,7 +28,7 @@ const welcome = () => {
   figlet("Pensum", async (error, result) => {
     console.log(chalk.yellow(result));
     console.log(chalk.gray("--------------------------------------"));
-    console.log(chalk.gray("Pensum-CLI              version: 1.0.0"));
+    console.log(chalk.gray("Pensum-CLI              version: 1.1.0"));
     console.log(chalk.gray("--------------------------------------"));
     await menu();
   });
