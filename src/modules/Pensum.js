@@ -1,41 +1,63 @@
 import { readFile, writeFile } from "./File.js";
-import Subject from "./Subject.js";
 
 class Pensum {
-  
-  constructor(){
-    return new Promise(async (resolve, reject) => {
-      try {
-        this.subjectList = await readFile();
-        resolve(this)
-      } catch (error) {
-        reject(error)
-      }
-    })
+  static #instance
+  #subjectList
+
+  constructor() {
+    readFile().then(list => this.#subjectList = list)
   }
 
-  newSubject(subject){
-    return new Promise((resolve, reject) => {
-      let list = this.subjectList
-      list.push(subject)
-      this.subjectList = list
-
-      resolve(this.subjectList);
-    })
-  }
-  
-  savePensum(){
-    return writeFile(this.subjectList)
+  static getInstance(){
+    if (!this.#instance) {
+      this.#instance = new Pensum();
+    }
+    return this.#instance;
   }
 
-  //======================
+  newSubject(subject) {
+    this.#subjectList.push(subject);
+    this.savePensum();
+    return this.#subjectList;
+  }
 
-  getSubjectList(){
-    return this.subjectList
+  async getSubjectByName(subjectName) {
+    return this.#subjectList.find(
+      (e) => e.name.toLowerCase() === subjectName.toLowerCase()
+    );
   }
-  setSubjectList(value){
-    this.subjectList = value;
+
+  async getSubjectIndex(subject) {
+    return this.#subjectList.findIndex(
+      (e) => JSON.stringify(e) === JSON.stringify(subject)
+    );
   }
-  
+
+  async removeSubject(subject) {
+    const index = await this.getSubjectIndex(subject);
+    this.#subjectList.splice(index, 1);
+    this.savePensum();
+  }
+
+  async updateSubject(subjectUpdated, oldSubject) {
+    const index = await this.getSubjectIndex(oldSubject);
+    this.#subjectList[index] = subjectUpdated;
+    this.savePensum();
+  }
+
+  savePensum() {
+    return writeFile(this.#subjectList);
+  }
+
+  //= =====================
+
+  async getSubjectList() {
+    // this.#subjectList = await readFile();
+    return this.#subjectList;
+  }
+
+  setSubjectList(value) {
+    this.#subjectList = value;
+  }
 }
 export default Pensum;

@@ -1,8 +1,9 @@
-import {welcome} from './modules/Interaction.js'
+#!/usr/bin/env node
+
+import welcome from "./modules/Welcome.js";
 
 const main = async () => {
-  welcome()
-}
-
+  welcome();
+};
 
 main();
